@@ -14,8 +14,35 @@ const game = {
 		blank.textContent = '_';
 		document.querySelector('#game').appendChild(blank);
 	},
+	keyPressed: function (e) {
+		let keyChar = String.fromCharCode(e.keyCode);
+		let arr = [];
+		game.guessedLetters.push(keyChar);
+		for (var i = 0; i < game.mysteryWord.length; i++) {
+			if (game.mysteryWord[i] == keyChar) {
+				document.querySelector('#game').children[i].textContent = keyChar;
+			}
+			arr.push(document.querySelector('#game').children[i].textContent);
+		}
+
+		function isBlank(element) {
+			return element === '_';
+		}
+		if (arr.some(isBlank)) {
+			game.won = false;
+		} else {
+			game.won = true;
+		}
+		if (game.won == true) {
+			game.win();
+		}
+		document.querySelector('#guessed').textContent += keyChar;
+	},
 	win: function () {
-		document.querySelector('#game').innerHTML = 'you won!';
+		let banner = document.createElement('div');
+		banner.textContent = 'you won!';
+		document.querySelector('#game').appendChild(banner);
+		document.removeEventListener('keypress', game.keyPressed);
 	},
 
 	reset: function () {
@@ -34,29 +61,4 @@ document.querySelector('#new-game').onclick = function () {
 	}
 }
 
-document.addEventListener('keypress', function (e) {
-	let keyChar = String.fromCharCode(e.keyCode);
-	let arr = [];
-	game.guessedLetters.push(keyChar);
-	for (var i = 0; i < game.mysteryWord.length; i++) {
-		if (game.mysteryWord[i] == keyChar) {
-			document.querySelector('#game').children[i].textContent = keyChar;
-		}
-		arr.push(document.querySelector('#game').children[i].textContent);
-	}
-
-	function isBlank(element) {
-		return element === '_';
-	}
-	if (arr.some(isBlank)) {
-		game.won = false;
-	} else {
-		game.won = true;
-	}
-	if (game.won == true) {
-		game.win();
-	}
-
-	document.querySelector('#guessed').textContent += keyChar;
-	console.log(game.guessedLetters);
-})
+document.addEventListener('keypress', game.keyPressed);

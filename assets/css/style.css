@@ -1,0 +1,39 @@
+.container {
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	display: grid;
+	grid-template-columns: 25% 50% 25%;
+	grid-template-rows: 10% 50% 30% 10%;
+}
+
+.blank {
+	display: inline-block;
+	font-size: 2em;
+	margin: 10px;
+}
+
+#game {
+	grid-column: 2/2;
+	grid-row: 2/2;
+	justify-content: center;
+	align-self: center;
+	text-align: center;
+}
+
+#guessed {
+	grid-column: 2/2;
+	grid-row: 3/3;
+	text-align: center;
+}
+
+#new-game {
+	position: absolute;
+	align-self: center;
+	justify-self: center;
+	display: inline;
+	grid-column: 2/2;
+	grid-row: 3/3;
+
+	;
+}

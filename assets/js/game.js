@@ -4,6 +4,7 @@ const game = {
 		"typical", "simply", "meet", "how", "particular", "passage", "gently", "remember", "particles", "took", "everyone", "height", "matter", "iron", "end", "themselves", "hurried", "regular", "city", "man", "nearer", "yet", "solve", "club", "suddenly", "physical", "scene", "describe", "studying", "before", "office", "hunter", "tie", "strip", "other", "such", "save", "slightly", "draw", "seems", "rush", "grabbed", "slipped", "outside", "even", "so", "trade", "substance", "ball", "frequently", "tank", "ready", "forest", "second", "well", "lake", "equator", "society", "according", "price", "tax", "simple", "noun", "win", "operation", "he", "any", "support", "noise", "neighbor", "kitchen", "told", "affect", "scientific", "sugar", "mistake", "rate", "sing", "scientific", "loose", "am", "disappear", "breakfast", "wide", "horse", "believed", "piece", "drawn", "riding", "giving", "unhappy", "nearly", "magnet", "sides", "tomorrow", "wait", "tight", "sang"
 	],
 	guessedLetters: [],
+	won: false,
 	wordSelect: function () {
 		return game.wordBank[Math.floor(Math.random() * game.wordBank.length)]
 	},
@@ -13,6 +14,10 @@ const game = {
 		blank.textContent = '_';
 		document.querySelector('#game').appendChild(blank);
 	},
+	win: function () {
+		document.querySelector('#game').innerHTML = 'you won!';
+	},
+
 	reset: function () {
 		guessedLetters = [];
 		document.querySelector('#game').innerHTML = '';
@@ -30,13 +35,28 @@ document.querySelector('#new-game').onclick = function () {
 }
 
 document.addEventListener('keypress', function (e) {
-	var keyChar = String.fromCharCode(e.keyCode);
+	let keyChar = String.fromCharCode(e.keyCode);
+	let arr = [];
 	game.guessedLetters.push(keyChar);
 	for (var i = 0; i < game.mysteryWord.length; i++) {
 		if (game.mysteryWord[i] == keyChar) {
 			document.querySelector('#game').children[i].textContent = keyChar;
 		}
+		arr.push(document.querySelector('#game').children[i].textContent);
 	}
+
+	function isBlank(element) {
+		return element === '_';
+	}
+	if (arr.some(isBlank)) {
+		game.won = false;
+	} else {
+		game.won = true;
+	}
+	if (game.won == true) {
+		game.win();
+	}
+
 	document.querySelector('#guessed').textContent += keyChar;
 	console.log(game.guessedLetters);
 })

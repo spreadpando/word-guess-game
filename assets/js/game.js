@@ -41,6 +41,7 @@ const game = {
 	win: function () {
 		let banner = document.createElement('div');
 		banner.textContent = 'you won!';
+		banner.style.fontSize = '2em';
 		document.querySelector('#game').appendChild(banner);
 		document.removeEventListener('keypress', game.keyPressed);
 	},
@@ -51,7 +52,6 @@ const game = {
 		document.querySelector('#guessed').innerHTML = '';
 	},
 }
-
 
 document.querySelector('#new-game').onclick = function () {
 	game.reset();

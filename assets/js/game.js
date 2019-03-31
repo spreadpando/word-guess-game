@@ -59,6 +59,5 @@ document.querySelector('#new-game').onclick = function () {
 	for (var i = 0; i < game.mysteryWord.length; i++) {
 		game.drawBlank();
 	}
+	document.addEventListener('keypress', game.keyPressed);
 }
-
-document.addEventListener('keypress', game.keyPressed);
